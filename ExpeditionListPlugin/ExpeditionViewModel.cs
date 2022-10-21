@@ -1,4 +1,4 @@
-﻿using Grabacr07.KanColleWrapper;
+using Grabacr07.KanColleWrapper;
 using Livet;
 using Livet.EventListeners;
 using System.Collections.Generic;
@@ -30,6 +30,7 @@ namespace ExpeditionListPlugin
                 isArea3Contain = value;
                 isArea4Contain = value;
                 isArea5Contain = value;
+                isArea6Contain = value;
                 this.RaisePropertyChanged();
             }
         }
@@ -109,6 +110,21 @@ namespace ExpeditionListPlugin
             }
         }
         #endregion
+        #region isArea6Contain 変更通知プロパティ
+        private Boolean _isArea6Contain;
+        public Boolean isArea6Contain
+        {
+            get
+            {
+                return _isArea6Contain;
+            }
+            set
+            {
+                _isArea6Contain = value;
+                this.RaisePropertyChanged();
+            }
+        }
+        #endregion
 
         #region ExpeditionInfos 変更通知プロパティ
         private List<ExpeditionInfo> _ExpeditionInfos;
@@ -177,6 +193,10 @@ namespace ExpeditionListPlugin
                 {
                     () => this.isArea5Contain,
                     (_, __) => { DispatcherHelper.UIDispatcher.Invoke(this.UpdateView); }
+                },
+                {
+                    () => this.isArea6Contain,
+                    (_, __) => { DispatcherHelper.UIDispatcher.Invoke(this.UpdateView); }
                 }
             });
         }
@@ -184,11 +204,12 @@ namespace ExpeditionListPlugin
         public void SetArea(String area)
         {
             isAllArea = false;
-            isArea1Contain = "鎮守".Equals(area) ? true : false;
-            isArea2Contain = "南西".Equals(area) ? true : false;
+            isArea1Contain = "鎮守府".Equals(area) ? true : false;
+            isArea2Contain = "南西諸島".Equals(area) ? true : false;
             isArea3Contain = "北方".Equals(area) ? true : false;
-            isArea4Contain = "西方".Equals(area) ? true : false;
-            isArea5Contain = "南方".Equals(area) ? true : false;
+            isArea4Contain = "南西".Equals(area) ? true : false;
+            isArea5Contain = "西方".Equals(area) ? true : false;
+            isArea6Contain = "南方".Equals(area) ? true : false;
         }
 
         private void UpdateExpedition()
@@ -197,11 +218,12 @@ namespace ExpeditionListPlugin
 
             ExpeditionInfo.ExpeditionList.ToList().ForEach(info =>
             {
-                if ((isArea1Contain && "鎮守".Equals(info.Area)) ||
-                    (isArea2Contain && "南西".Equals(info.Area)) ||
+                if ((isArea1Contain && "鎮守府".Equals(info.Area)) ||
+                    (isArea2Contain && "南西諸島".Equals(info.Area)) ||
                     (isArea3Contain && "北方".Equals(info.Area)) ||
-                    (isArea4Contain && "西方".Equals(info.Area)) ||
-                    (isArea5Contain && "南方".Equals(info.Area))
+                    (isArea4Contain && "南西".Equals(info.Area)) ||
+                    (isArea5Contain && "西方".Equals(info.Area)) ||
+                    (isArea6Contain && "南方".Equals(info.Area))
                     )
                 {
 
